@@ -1,0 +1,6 @@
+@SocialMusic_HostAddress = http://localhost:5114
+
+GET {{SocialMusic_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -37,13 +37,13 @@ namespace SocialMusic
             // app.UseCors("PermitirReact");
 
             //=========Usada Para desarrollo
-            if (builder.Environment.IsDevelopment())
-            {
+            //if (builder.Environment.IsDevelopment())
+            //{
                 app.UseCors(policy =>
                     policy.AllowAnyOrigin()
                           .AllowAnyHeader()
                           .AllowAnyMethod());
-            }
+            //}
 
 
 

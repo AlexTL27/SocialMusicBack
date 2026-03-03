@@ -14,7 +14,39 @@ namespace SocialMusic
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
+            //################## CORS para fetch en front######################
+            //builder.Services.AddCors(options => 
+            //{
+            //    options.AddPolicy("PermitirReact",
+            //        policy =>
+            //        {
+            //            policy.WithOrigins("http://localhost:5173").AllowAnyHeader().AllowAnyMethod();
+            //        });
+
+
+            //});
+
+
             var app = builder.Build();
+
+
+
+
+            //==========Producción=================
+            // app.UseCors("PermitirReact");
+
+            //=========Usada Para desarrollo
+            if (builder.Environment.IsDevelopment())
+            {
+                app.UseCors(policy =>
+                    policy.AllowAnyOrigin()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod());
+            }
+
+
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SocialMusic.Data;
 
 namespace SocialMusic
 {
@@ -13,6 +16,15 @@ namespace SocialMusic
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
+            //=========ENtity framework=========
+            builder.Services.AddDbContext<AppDbContext>(options => 
+                options.UseNpgsql(builder.Configuration.GetConnectionString("conexion")));
 
 
             //################## CORS para fetch en front######################

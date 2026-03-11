@@ -30,12 +30,12 @@ namespace SocialMusic.Data
                 .UseIdentityColumn().ValueGeneratedOnAdd();
 
                 tb.Property(col => col.Name).HasMaxLength(100).IsRequired();
-                tb.HasIndex(col => col.Name);
+                tb.HasIndex(col => col.Name).IsUnique();
 
                 tb.Property(col => col.Password).HasMaxLength(200).IsRequired();
 
                 tb.Property(col => col.Email).HasMaxLength(100).IsRequired();
-                tb.HasIndex(col => col.Email).IsUnique();
+                tb.HasIndex(col => col.Email);
                 
                 //valor puesto desde sql
                 tb.Property(col => col.CreatedAt).HasDefaultValueSql("NOW()");

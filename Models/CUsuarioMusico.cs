@@ -22,6 +22,9 @@ namespace SocialMusic.Models
         //Es Género Musical
         public string Gender { get; set; } = "";
 
+
+        //OTras propiedades del usuario
+
         public DateTime CreatedAt { get; set; }
 
         public bool IsActive { get; set; }

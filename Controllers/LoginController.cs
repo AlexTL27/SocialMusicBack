@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using SocialMusic.Data;
 using SocialMusic.Models;
+using SocialMusic.Services;
 using System.Runtime.InteropServices;
 
 
@@ -12,18 +14,20 @@ namespace SocialMusic.Controllers
     {
 
         private readonly AppDbContext _context;
+        private readonly TokenService _tokenService;
 
         //Obtener la BD
-        public LoginController(AppDbContext context)
+        public LoginController(AppDbContext context, TokenService token)
         {
             _context = context;
+            _tokenService = token;
         }
 
 
         [HttpPost]
         public IActionResult Login([FromBody] CLoginRequest login)
         {
-            var usuario = _context.UsuariosMusicos.FirstOrDefault(u => u.Email == login.Email);
+            CUsuarioMusico? usuario = _context.UsuariosMusicos.FirstOrDefault(u => u.Email == login.Email);
 
             if (usuario == null) 
                 return BadRequest(new { mensaje = "Email aún no registrado", exito = false });
@@ -35,12 +39,22 @@ namespace SocialMusic.Controllers
                 return BadRequest(new { mensaje = "Contraseña incorrecta", exito = false });
 
 
+
             //Generar Token para Validaciones
-
-
-            return Ok(new { mensaje = "Login exitoso", exito = true });
+            var token = _tokenService.GenerarToken(usuario);
+            return Ok(new CLoginResponse
+            { 
+                Token = token,
+                Mensaje = "Login exitoso", 
+                Exito = true,
+                Usuario = new UsuarioDTO {
+                    Email = usuario.Email,
+                    Name = usuario.Name,
+                    Id = usuario.Id
+                }
+            });
         }
 
-
+     
     }
 }

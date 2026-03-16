@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialMusic.Data;
+using SocialMusic.Services;
 
 namespace SocialMusic
 {
@@ -25,6 +26,11 @@ namespace SocialMusic
             //=========ENtity framework=========
             builder.Services.AddDbContext<AppDbContext>(options => 
                 options.UseNpgsql(builder.Configuration.GetConnectionString("conexion")));
+
+
+
+            //Servicios de TOken
+            builder.Services.AddScoped<TokenService>();
 
 
             //################## CORS para fetch en front######################
